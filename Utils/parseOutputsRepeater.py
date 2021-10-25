@@ -14,17 +14,23 @@ def parseOutputRepeater(inputDir, fName='testOutput.csv', asInt=True):
     values = df[[f'TX_DATA_{i}' for i in range(11)]].values
     valsBin = np.vectorize(bin32)(values,hex=True)
 
-    #join data from each line together, dropping first 5 bits (header) and last 11 bits (padded zeros)
+    # look at header
+    dataHeader = np.array([''.join(x)[:5] for x in valsBin])
+    dataBX = dataHeader.T.view('<U5').T
+
+    # join data from each line together, dropping first 5 bits (header) and last 11 bits (padded zeros)
     dataStrings = np.array([''.join(x)[5:-11] for x in valsBin])
 
-    #split data into 7 character chunks
+    # split data into 7 character chunks
     dataTC = dataStrings.T.view('<U7').T.reshape(-1,48)
 
     if asInt:
+        dataBX = np.vectorize(int)(dataBX,2)
         dataTC = np.vectorize(int)(dataTC,2)
 
     df = pd.DataFrame(dataTC,columns=[f'OUT_TC_{i}' for i in range(48)])
-
+    df['BX'] = dataBX
+    
     return df
 
 if __name__=='__main__':
