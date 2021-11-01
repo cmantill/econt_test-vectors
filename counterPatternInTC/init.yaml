@@ -70,7 +70,7 @@ ECON-T:
      params:
       select:
        # 0: threshold sum, 1: Super Trigger Cell, 2: Best Choice (disabled), 3: repeater, 4: Autoencoder (Disabled)
-       param_value: 3
+       param_value: 1
       density:
        # 1: high density
        param_value: 1
