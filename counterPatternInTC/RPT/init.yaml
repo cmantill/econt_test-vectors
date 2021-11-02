@@ -32,7 +32,7 @@ ECON-T:
      value: 338 # default for eRx = 13
     buff_t2:
      value: 314 # default for eRx = 13
-    buff_t3:  
+    buff_t3:
      value: 25 # default for eRx = 13
     config:
      params:
@@ -47,29 +47,29 @@ ECON-T:
   MFC_MUX_SELECT:
    registers:
     mux_select_*:
-     value: [ 7,  4,   5,  6,  3,  1,  0,  2,
-              8,  9,  10, 11, 14, 13, 12, 15,
-              23, 20, 21, 22, 19, 17, 16, 18,
-              25, 24, 26, 27, 30, 31, 28, 29,
-              38, 37, 39, 46, 36, 34, 33, 35,
-              40, 32, 41, 42, 47, 45, 43, 44]
+     value: [ 3,  2,  1,  0,  7,  6,  5,  4,
+             11, 10,  9,  8, 15, 14, 13, 12,
+             19, 18, 17, 16, 23, 22, 21, 20,
+             27, 26, 25, 24, 31, 30, 29, 28,
+             35, 34, 33, 32, 39, 38, 37, 36,
+             43, 42, 41, 40, 47, 46, 45, 44]
 
   MFC_CAL_VAL:
    registers:
     cal_*:
-     value: [348, 347, 335, 336, 347, 348, 335, 335,
-             323, 323, 311, 311, 325, 324, 312, 314, 
-             307, 293, 304, 318, 280, 267, 279, 291,
-             303, 290, 302, 315, 329, 316, 328, 340,
-             263, 276, 274, 261, 289, 302, 300, 287,
-             286, 299, 298, 286, 261, 274, 274, 262]             
+     value: [2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048]
 
   MFC_ALGORITHM_SEL_DENSITY:
    registers:
     algo:
      params:
       select:
-       # 0: threshold sum, 1: Super Trigger Cell, 2: Best Choice (disabled), 3: repeater, 4: Autoencoder (Disabled)   
+       # 0: threshold sum, 1: Super Trigger Cell, 2: Best Choice (disabled), 3: repeater, 4: Autoencoder (Disabled)
        param_value: 3
       density:
        # 1: high density
