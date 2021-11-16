@@ -57,4 +57,4 @@ else:
     exit
     
 for d in data_rows:
-    print(d['BX'],d['Charge'],len(d['Charge']))
+    print(d['BX'],d['Charge'])
