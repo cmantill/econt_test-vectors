@@ -7,7 +7,7 @@ from functools import partial
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', type=str, required=True, dest="inputFile", help="input file")
 parser.add_argument('-n', type=int, default=13, dest="n_TX_enabled",help="number of etx enabled")
-parser.add_argument('--header', dest="header", action='store_true', default=True, help='Input file has header')
+parser.add_argument('--header', dest="header", action='store_true', default=False, help='Input file has header')
 parser.add_argument('--algo', type=str, required=True, dest="algo", choices=["TS","RPT","input"], help="algorithm to unpack")
 parser.add_argument('--nrows', type=int, default=1, dest="nrows", help="number of rows")
 parser.add_argument('--startrow', type=int, default=0, dest="startrow", help="initial row to read")
