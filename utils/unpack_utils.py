@@ -62,7 +62,7 @@ def Repeater_unpack(data,neTx=13):
             while True:
                 nextHeader, = bitstruct.unpack_from('u5', data, offset=offset)
                 offset += bitstruct.calcsize('u5')
-                if nextHeader==expBX:
+                if nextHeader==expBX or (nextHeader==31 and expBX==12):
                     offset -= bitstruct.calcsize('u5')
                     break
     except:
@@ -73,6 +73,7 @@ def Repeater_unpack(data,neTx=13):
 def TS_unpack(data):
     offset = 0
     rows = []
+    possible_headers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,31]
     try:
         while True:
             start_offset = offset
@@ -81,8 +82,13 @@ def TS_unpack(data):
             header = bitstruct.unpack_from_dict('u5u3u8', ['BX', 'Type', 'Sum'], data, offset=offset)
             offset += bitstruct.calcsize('u5u3u8')
 
+            if header['BX'] not in possible_headers:
+                print(f"Bad BX {header['BX']}")
+                offset = start_offset + 16
+                continue
+
             if header['Type'] == 0b100: # high occupancy
-                print('high occupancy')
+                # print('high occupancy')
                 # 3 words of channel map
                 addr = np.array(bitstruct.unpack_from('b1'*48, data, offset=offset), bool)
                 offset += bitstruct.calcsize('b1'*48)
@@ -104,7 +110,7 @@ def TS_unpack(data):
                              'Charge'  : charge,
                              'Padding' : padding})
             elif header['Type'] == 0b010: # low occupancy
-                print('low occupancy')
+                # print('low occupancy')
                 # 3 bit number of TC
                 NTCQ, = bitstruct.unpack_from('u3', data, offset=offset)
                 offset += 3
@@ -158,7 +164,9 @@ def TS_unpack(data):
                     rows[-1]['Sync_words'] = sync_words
                     break
 
-            if nextBX != expBX:
+            if nextBX == 31 and expBX == 12:
+                print(f'Reached BC0 from {header["BX"]} to {nextBX}, expected {expBX}')
+            elif nextBX != expBX:
                 print(f'Wrong BX progression from {header["BX"]} to {nextBX}, expected {expBX}')
                 offset = start_offset + 16
                 rows = rows[:-1]
@@ -166,5 +174,13 @@ def TS_unpack(data):
             
     except bitstruct.Error:
         print('bitstruct error - offset',offset)
+        rows[-1]['N_idles'] = N_idles
+        rows[-1]['Sync_words'] = sync_words
         pass
     return rows
+
+
+def STC_unpack(data):
+    offset = 0
+    rows = []
+    possible_headers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,31]
