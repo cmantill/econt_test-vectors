@@ -170,6 +170,12 @@ def TS_unpack(data):
         pass
     return rows
 
+def STC_unpack(data,neTx):
+    """
+    Super Trigger Cell
+    """
+    offset = 0
+    rows = []
 
 def BC_unpack(data,neTx):
     """
@@ -222,7 +228,7 @@ def BC_unpack(data,neTx):
             offset += NTCQ*7
 
             # padding bits
-            padding_bits = neTx*16 - NTCQ*7 - 4 - 7 - map_size
+            padding_bits = neTx*2*16 - NTCQ*7 - 4 - 7 - map_size
             if padding_bits > 0:
                 padding = bitstruct.unpack_from(f'u{padding_bits}', data, offset=offset)
                 offset += padding_bits
@@ -234,8 +240,16 @@ def BC_unpack(data,neTx):
                          'NTCQ'    : NTCQ,
                          'Charge'  : charge,
                          'Padding' : padding})
-            
+
     except bitstruct.Error:
         print('bitstruct error - offset',offset)
         pass
     return rows
+
+def AE_unpack(data,neTx):
+    """
+    Encoder algorithm
+    """
+    offset = 0
+    rows = []
+    

@@ -47,10 +47,12 @@ if args.algo=='TS':
     data_rows = TS_unpack(data_raw)
 elif args.algo=='RPT':
     data_rows = Repeater_unpack(data_raw,args.n_TX_enabled)
-#elif args.algo=='STC':
+elif args.algo=='STC':
+    data_rows = STC_unpack(data_raw,args.n_TX_enabled)
 elif args.algo=='BC':
     data_rows = BC_unpack(data_raw,args.n_TX_enabled)
-#elif args.algo=='AE':
+elif args.algo=='AE':
+    data_rows = AE_unpack(data_raw,args.n_TX_enabled)
 elif args.algo=='input':
     data_rows = Input_unpack(data_raw)
 else:
@@ -59,3 +61,4 @@ else:
 
 for i,d in enumerate(data_rows):
     print(i,d['BX'],d['Charge'])
+    # charge encoded with 4E+3M
