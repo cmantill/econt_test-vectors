@@ -207,8 +207,8 @@ def BC_unpack(data,neTx):
             start_offset = offset
 
             # if use_sum=1: send sum of all TC in module sum
-            header = bitstruct.unpack_from_dict('u4u7', ['BX', 'Sum'], data, offset=offset)
-            offset += bitstruct.calcsize('u4u7')
+            header = bitstruct.unpack_from_dict('u4u8', ['BX', 'Sum'], data, offset=offset)
+            offset += bitstruct.calcsize('u4u8')
 
             assert (header['BX'] in possible_headers), f"Bad BX {header['BX']}"
 
