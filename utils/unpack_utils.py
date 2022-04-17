@@ -228,7 +228,7 @@ def BC_unpack(data,neTx):
             offset += NTCQ*7
 
             # padding bits
-            padding_bits = neTx*2*16 - NTCQ*7 - 4 - 7 - map_size
+            padding_bits = neTx*2*16 - NTCQ*7 - 4 - 8 - map_size
             if padding_bits > 0:
                 padding = bitstruct.unpack_from(f'u{padding_bits}', data, offset=offset)
                 offset += padding_bits
