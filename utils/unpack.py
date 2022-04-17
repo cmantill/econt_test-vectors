@@ -6,9 +6,9 @@ import argparse
 from functools import partial
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', type=str, required=True, dest="inputFile", help="input file")
-parser.add_argument('-n', type=int, default=13, dest="n_TX_enabled",help="number of etx enabled")
+parser.add_argument('-n', type=int, required=True, dest="n_TX_enabled",help="number of etx enabled")
 parser.add_argument('--header', dest="header", action='store_true', default=False, help='Input file has header')
-parser.add_argument('--algo', type=str, required=True, dest="algo", choices=["TS","RPT","input"], help="algorithm to unpack")
+parser.add_argument('--algo', type=str, required=True, dest="algo", choices=["TS","RPT","BC","AE","input"], help="algorithm to unpack")
 parser.add_argument('--nrows', type=int, default=1, dest="nrows", help="number of rows")
 parser.add_argument('--startrow', type=int, default=0, dest="startrow", help="initial row to read")
 args = parser.parse_args()
@@ -48,13 +48,14 @@ if args.algo=='TS':
 elif args.algo=='RPT':
     data_rows = Repeater_unpack(data_raw,args.n_TX_enabled)
 #elif args.algo=='STC':
-#elif args.algo=='BC':
+elif args.algo=='BC':
+    data_rows = BC_unpack(data_raw,args.n_TX_enabled)
 #elif args.algo=='AE':
 elif args.algo=='input':
     data_rows = Input_unpack(data_raw)
 else:
     print('no selected algo')
     exit
-    
-for d in data_rows:
-    print(d['BX'],d['Charge'])
+
+for i,d in enumerate(data_rows):
+    print(i,d['BX'],d['Charge'])

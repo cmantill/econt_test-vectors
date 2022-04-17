@@ -1,11 +1,13 @@
 import bitstruct
 import numpy as np
 
+possible_headers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,31]
+possible_headers_input = [9,10]
+
 def Input_unpack(data):
     offset = 0
     rows = []
     neRx = 12
-    possible_headers = [9,10]
     try:
         while True:
             charges = []
@@ -13,10 +15,7 @@ def Input_unpack(data):
                 header, = bitstruct.unpack_from('u4', data, offset=offset)
                 offset += bitstruct.calcsize('u4')
 
-                if header not in possible_headers:
-                    print(f'Bad BX {header}')
-                    offset = start_offset + 16
-                    continue
+                assert (header in possible_headers_input), f'Bad BX {header}'
             
                 NTCQ = 4
                 charge = np.array(bitstruct.unpack_from('u7'*NTCQ, data, offset=offset))
@@ -35,18 +34,14 @@ def Repeater_unpack(data,neTx=13):
     offset = 0
     rows = []
     nTC = 48
-    possible_headers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,31]
     try:                
         while True:
             start_offset = offset
             header, = bitstruct.unpack_from('u5', data, offset=offset)
             offset += bitstruct.calcsize('u5')
 
-            if header not in possible_headers:
-                print(f'Bad BX {header}')
-                offset = start_offset + 16
-                continue
-
+            assert (header in possible_headers), print(f'Bad BX {header}')
+            
             # 16 bit words * 2 * number of eTX - (nTC * 7bit + header)
             padding_bits = (16*2*neTx)- (nTC*7 + 5)
             charge = np.array(bitstruct.unpack_from('u7'*48, data, offset=offset))
@@ -73,7 +68,6 @@ def Repeater_unpack(data,neTx=13):
 def TS_unpack(data):
     offset = 0
     rows = []
-    possible_headers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,31]
     try:
         while True:
             start_offset = offset
@@ -82,11 +76,8 @@ def TS_unpack(data):
             header = bitstruct.unpack_from_dict('u5u3u8', ['BX', 'Type', 'Sum'], data, offset=offset)
             offset += bitstruct.calcsize('u5u3u8')
 
-            if header['BX'] not in possible_headers:
-                print(f"Bad BX {header['BX']}")
-                offset = start_offset + 16
-                continue
-
+            assert (header['BX'] in possible_headers), f"Bad BX {header['BX']}"
+            
             if header['Type'] == 0b100: # high occupancy
                 # print('high occupancy')
                 # 3 words of channel map
@@ -180,7 +171,71 @@ def TS_unpack(data):
     return rows
 
 
-def STC_unpack(data):
+def BC_unpack(data,neTx):
+    """
+    Best Choice: Sorts the TC by charge and transmits the N TC with highest charge.
+    input: data with only neTx active
+    """
     offset = 0
     rows = []
-    possible_headers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,31]
+
+    # number of TC to be transmitted by neTx
+    NTCQ = {
+        1: 1,
+        2: 4,
+        3: 6,
+        4: 9,
+        5: 14,
+        6: 18,
+        7: 23,
+        8: 28,
+        9: 32,
+        10: 37,
+        11: 41,
+        12: 46,
+        13: 48,
+    }[neTx]
+    
+    try:
+        while True:
+            start_offset = offset
+
+            # if use_sum=1: send sum of all TC in module sum
+            header = bitstruct.unpack_from_dict('u4u7', ['BX', 'Sum'], data, offset=offset)
+            offset += bitstruct.calcsize('u4u7')
+
+            assert (header['BX'] in possible_headers), f"Bad BX {header['BX']}"
+
+            # addr/map correspond to the position on the output of the channel multiplexer
+            map_size = 0
+            if NTCQ>=4:
+                addr = np.array(bitstruct.unpack_from('b1'*48, data, offset=offset))
+                offset += bitstruct.calcsize('b1'*48)
+                map_size = 48
+            else:
+                addr = np.array(bitstruct.unpack_from('b6'*NTCQ, data, offset=offset))
+                offset += bitstruct.calcsize('b6'*NTCQ)
+                map_size = NTCQ*6
+
+            # 7 bit charge for each NTC
+            charge = np.array(bitstruct.unpack_from('u7'*NTCQ, data, offset=offset))
+            offset += NTCQ*7
+
+            # padding bits
+            padding_bits = neTx*16 - NTCQ*7 - 4 - 7 - map_size
+            if padding_bits > 0:
+                padding = bitstruct.unpack_from(f'u{padding_bits}', data, offset=offset)
+                offset += padding_bits
+            else:
+                padding = None
+            rows.append({'BX'      : header['BX'],
+                         'Sum'     : header['Sum'],
+                         'Addr'    : addr,
+                         'NTCQ'    : NTCQ,
+                         'Charge'  : charge,
+                         'Padding' : padding})
+            
+    except bitstruct.Error:
+        print('bitstruct error - offset',offset)
+        pass
+    return rows
