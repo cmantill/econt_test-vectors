@@ -3,6 +3,7 @@ import numpy as np
 
 possible_headers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,31]
 possible_headers_input = [9,10]
+possible_headers_fixedlat = [0,1,2,3,4,5,6,7,15]
 
 def Input_unpack(data):
     offset = 0
@@ -170,17 +171,63 @@ def TS_unpack(data):
         pass
     return rows
 
-def STC_unpack(data,neTx):
+def STC_unpack(data,STC_type,neTx):
     """
-    Super Trigger Cell
+    Super Trigger Cell: Sums charge data from groups of adjacent TC, transmits the sum.
+    Also transmit the address of the TC with maximum charge in each group when selected.
+    data:  data with only neTx active
+    STC_type:
+    - 0: STC4_9 (5E+4M)
+    - 1: STC16 (5E+4M)
+    - 2: CTC4 (5E+4M)
+    - 3: STC4_7 (4E+3M)
     """
     offset = 0
     rows = []
 
+    NSTC = {
+        0: 12,
+        1: 3,
+        2: 12,
+        3: 12,
+    }[STC_type][neTx-1]
+    
+    try:
+        while True:
+            start_offset = offset
+
+            header = bitstruct.unpack_from_dict('u4', ['BX'], data, offset=offset)
+            offset += bitstruct.calcsize('u4')
+            
+            assert (header['BX'] in possible_headers_fixedlat), f"Bad BX {header['BX']}"
+
+            map_size = 0
+            if STC_type==0:
+                # address of the TC with maximum charge
+                addr = np.array(bitstruct.unpack_from('u2'*NSTC, data, offset=offset))
+                offset += bitstruct.calcsize('u2'*NSTC)
+                map_size = NSTC*2
+            elif STC_type==1:
+                addr = np.array(bitstruct.unpack_from('u4'*NSTC, data, offset=offset))
+                offset += bitstruct.calcsize('u4'*NSTC)
+                map_size = NSTC*4
+                
+            # 9 bit charge sum for each STC
+            charge = np.array(bitstruct.unpack_from('u9'*NSTC, data, offset=offset))
+            offset += NSTC*9
+
+            # padding bits
+            padding_bits = neTx*2*16 - NSTC*9 - 4 - map_size
+            if padding_bits > 0:
+                padding = bitstruct.unpack_from(f'u{padding_bits}', data, offset=offset)
+                offset += padding_bits
+            else:
+                padding = None
+            
 def BC_unpack(data,neTx):
     """
     Best Choice: Sorts the TC by charge and transmits the N TC with highest charge.
-    input: data with only neTx active
+    data: data with only neTx active
     """
     offset = 0
     rows = []
@@ -210,7 +257,7 @@ def BC_unpack(data,neTx):
             header = bitstruct.unpack_from_dict('u4u8', ['BX', 'Sum'], data, offset=offset)
             offset += bitstruct.calcsize('u4u8')
 
-            assert (header['BX'] in possible_headers), f"Bad BX {header['BX']}"
+            assert (header['BX'] in possible_headers_fixedlat), f"Bad BX {header['BX']}"
 
             # addr/map correspond to the position on the output of the channel multiplexer
             map_size = 0
@@ -241,6 +288,10 @@ def BC_unpack(data,neTx):
                          'Charge'  : charge,
                          'Padding' : padding})
 
+            expBX = ((header['BX'] + 1) % 8) if (header['BX'] != 15) else 1
+            nextBX, = bitstruct.unpack_from('u4', data, offset=offset)
+            if nextBX == 15:
+                print(f'Reached BC0 from {header["BX"]} to {nextBX}, expected {expBX}')
     except bitstruct.Error:
         print('bitstruct error - offset',offset)
         pass
