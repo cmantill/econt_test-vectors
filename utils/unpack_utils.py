@@ -237,7 +237,7 @@ def STC_unpack(data,STC_type,neTx):
 
             rows.append({'BX'      : header['BX'],
                          'Addr'    : addr,
-                         'NTCQ'    : NTCQ,
+                         'NSTC'    : NSTC,
                          'Charge'  : charge,
                          'Padding' : padding})
 
