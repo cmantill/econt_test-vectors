@@ -13,11 +13,13 @@ def Input_unpack(data):
         while True:
             charges = []
             for i in range(neRx):
+                # 4-bit header
                 header, = bitstruct.unpack_from('u4', data, offset=offset)
                 offset += bitstruct.calcsize('u4')
 
                 assert (header in possible_headers_input), f'Bad BX {header}'
-            
+
+                # 4 TC per eRx (48 Total)
                 NTCQ = 4
                 charge = np.array(bitstruct.unpack_from('u7'*NTCQ, data, offset=offset))
                 charges.extend(list(charge))
@@ -37,16 +39,18 @@ def Repeater_unpack(data,neTx=13):
     nTC = 48
     try:                
         while True:
-            start_offset = offset
+            # 5-bit header
             header, = bitstruct.unpack_from('u5', data, offset=offset)
             offset += bitstruct.calcsize('u5')
 
             assert (header in possible_headers), print(f'Bad BX {header}')
-            
-            # 16 bit words * 2 * number of eTX - (nTC * 7bit + header)
-            padding_bits = (16*2*neTx)- (nTC*7 + 5)
+
+            # 7 bit charge
             charge = np.array(bitstruct.unpack_from('u7'*48, data, offset=offset))
             offset += bitstruct.calcsize('u7'*48)
+
+            # 16 bit words * 2 * number of eTX - (nTC * 7bit + header)
+            padding_bits = (16*2*neTx) - (nTC*7 + 5)
             if padding_bits > 0:
                 padding = bitstruct.unpack_from(f'u{padding_bits}', data, offset=offset)
                 offset += padding_bits
@@ -55,12 +59,12 @@ def Repeater_unpack(data,neTx=13):
                          'Charge'  : charge})
 
             expBX = ((header + 1) % 16) if (header != 31) else 1
-            while True:
-                nextHeader, = bitstruct.unpack_from('u5', data, offset=offset)
-                offset += bitstruct.calcsize('u5')
-                if nextHeader==expBX or (nextHeader==31 and expBX==12):
-                    offset -= bitstruct.calcsize('u5')
-                    break
+            nextBX,_ = bitstruct.unpack_from('u5', data, offset=offset)
+            if nextBX == 31 and expBX == 12:
+                print(f'Reached BC0 from {header} to {nextBX}, expected {expBX}')
+            elif nextBX != expBX:
+                print(f'Wrong BX progression from {header} to {nextBX}, expected {expBX}')
+
     except:
         print('bitstruct error - offset',offset)
         pass
@@ -85,10 +89,11 @@ def TS_unpack(data):
                 addr = np.array(bitstruct.unpack_from('b1'*48, data, offset=offset), bool)
                 offset += bitstruct.calcsize('b1'*48)
                 NTCQ = sum(addr)
-                # 22 16 bit words - NTCQ * (7 bit charge)
-                padding_bits = (22*16 - NTCQ*7) 
+                # 7-bit charge
                 charge = np.array(bitstruct.unpack_from('u7'*NTCQ, data, offset=offset))
                 offset += 7*NTCQ
+                # 22 16 bit words - NTCQ * (7 bit charge)
+                padding_bits = (22*16 - NTCQ*7) 
                 if padding_bits > 0:
                     padding = bitstruct.unpack_from(f'u{padding_bits}', data, offset=offset)
                     offset += padding_bits
@@ -173,25 +178,29 @@ def TS_unpack(data):
 
 def STC_unpack(data,STC_type,neTx):
     """
-    Super Trigger Cell: Sums charge data from groups of adjacent TC, transmits the sum.
+    Super Trigger Cell: Sums charge data from groups of adjacent 22-bit TC, transmits the sum.
+    The index of TC comes from the TC MUX.
     Also transmit the address of the TC with maximum charge in each group when selected.
     data:  data with only neTx active
     STC_type:
-    - 0: STC4_9 (5E+4M)
-    - 1: STC16 (5E+4M)
-    - 2: CTC4 (5E+4M)
-    - 3: STC4_7 (4E+3M)
+    - 0: STC4_9 (5E+4M) Sums of 4 TC
+    - 1: STC16_9 (5E+4M) Sums of 16 TC
+    - 2: CTC4_7 (4E+3M) Sums of 4 TC
+    - 3: STC4_7 (4E+3M) Sums of 4 TC
     """
     offset = 0
     rows = []
 
-    NSTC = {
-        0: 12,
-        1: 3,
-        2: 12,
-        3: 12,
-    }[STC_type][neTx-1]
-    
+    try:
+        NSTC = {
+            0: [2,5,8,11,12],
+            1: [2,3],
+            2: [4,8,12],
+            3: [3,6,10,12],
+        }[STC_type][neTx-1]
+    except:
+        print(f'Invalid neTx index {neTx-1} for STC_type {STC_type}')
+        return rows
     try:
         while True:
             start_offset = offset
@@ -202,7 +211,7 @@ def STC_unpack(data,STC_type,neTx):
             assert (header['BX'] in possible_headers_fixedlat), f"Bad BX {header['BX']}"
 
             map_size = 0
-            if STC_type==0:
+            if STC_type==0 or STC_type==3:
                 # address of the TC with maximum charge
                 addr = np.array(bitstruct.unpack_from('u2'*NSTC, data, offset=offset))
                 offset += bitstruct.calcsize('u2'*NSTC)
@@ -211,6 +220,8 @@ def STC_unpack(data,STC_type,neTx):
                 addr = np.array(bitstruct.unpack_from('u4'*NSTC, data, offset=offset))
                 offset += bitstruct.calcsize('u4'*NSTC)
                 map_size = NSTC*4
+            elif STC_type==2:
+                addr = None
                 
             # 9 bit charge sum for each STC
             charge = np.array(bitstruct.unpack_from('u9'*NSTC, data, offset=offset))
@@ -223,6 +234,24 @@ def STC_unpack(data,STC_type,neTx):
                 offset += padding_bits
             else:
                 padding = None
+
+            rows.append({'BX'      : header['BX'],
+                         'Addr'    : addr,
+                         'NTCQ'    : NTCQ,
+                         'Charge'  : charge,
+                         'Padding' : padding})
+
+            expBX = ((header['BX'] + 1) % 8) if (header['BX'] != 15) else 1
+            nextBX, = bitstruct.unpack_from('u4', data, offset=offset)
+            if nextBX == 15:
+                print(f'Reached BC0 from {header["BX"]} to {nextBX}, expected {expBX}')
+            elif nextBX != expBX:
+                print(f'Wrong BX progression from {header["BX"]} to {nextBX}, expected {expBX}')
+                
+    except bitstruct.Error:
+        print('bitstruct error - offset',offset)
+        pass
+    return rows
             
 def BC_unpack(data,neTx):
     """
@@ -292,6 +321,9 @@ def BC_unpack(data,neTx):
             nextBX, = bitstruct.unpack_from('u4', data, offset=offset)
             if nextBX == 15:
                 print(f'Reached BC0 from {header["BX"]} to {nextBX}, expected {expBX}')
+            elif nextBX != expBX:
+                print(f'Wrong BX progression from {header["BX"]} to {nextBX}, expected {expBX}')
+                
     except bitstruct.Error:
         print('bitstruct error - offset',offset)
         pass
@@ -300,7 +332,44 @@ def BC_unpack(data,neTx):
 def AE_unpack(data,neTx):
     """
     Encoder algorithm
+    Weights are programmable by weights in AUTOENCODER_*INPUT block.
+    144-bit mask is programmable by mask_ae[143:0].
     """
     offset = 0
     rows = []
     
+    try:
+        while True:
+            start_offset = offset
+
+            # sum uses 5E+4M encoding without dropping any LSB
+            header = bitstruct.unpack_from_dict('u5u9', ['BX', 'Sum'], data, offset=offset)
+            offset += bitstruct.calcsize('u5u9')
+
+            assert (header in possible_headers), print(f'Bad BX {header}')
+
+            # packed bits
+            # here, only N bits are taken from the 144=16*9 encoded bits (9-bit 16 encoded outputs).
+            # N is determined from the number of 1s in mask_ae
+            # the first encoded[:packed_bits] are transmitted, packed_bits depends on neTx
+            # is up to the user that packed_bits>N
+            packed_bits = neTx*2*16 - 5 -9
+            packed_data = bitstruct.unpack_from(f'u{packed_bits}', data, offset=offset)
+            offset += packet_bits
+
+            rows.append({'BX'      : header['BX'],
+                         'Sum'     : header['Sum'],
+                         'Charge'  : packed_data,
+                         'Padding' : None})
+
+            expBX = ((header['BX'] + 1) % 16) if (header['BX'] != 31) else 1
+            nextBX, = bitstruct.unpack_from('u4', data, offset=offset)
+            if nextBX == 31 and expBX == 12:
+                print(f'Reached BC0 from {header["BX"]} to {nextBX}, expected {expBX}')
+            elif nextBX != expBX:
+                print(f'Wrong BX progression from {header["BX"]} to {nextBX}, expected {expBX}')
+                                
+    except bitstruct.Error:
+        print('bitstruct error - offset',offset)
+        pass
+    return rows
