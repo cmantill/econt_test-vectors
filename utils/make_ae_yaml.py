@@ -46,7 +46,35 @@ ECON-T:
   MFC_ALGORITHM_SEL_DENSITY:
    registers:
     algo:
-     value: 0x4
+     params:
+      select:
+       # 0: threshold sum, 1: Super Trigger Cell, 2: Best Choice (disabled), 3: repeater, 4: Autoencoder (Disabled)
+       param_value: 4
+      density:
+       # 1: high density
+       param_value: 1
+
+  MFC_MUX_SELECT:
+   registers:
+    mux_select_*:
+     value: [ 5,  6,  7,  1, 29, 28, 20, 21,
+             13,  4,  0,  2, 31, 30, 22, 23,
+             12, 14, 11,  3, 24, 27, 17, 16,
+             15,  8,  9, 10, 25, 26, 19, 18,
+             34, 35, 43, 41,
+             32, 33, 42, 40,
+             39, 38, 44, 47,
+             36, 37, 45, 46]
+
+  MFC_CAL_VAL:
+   registers:
+    cal_*:
+     value: [2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048]
 
   FMTBUF_ALL:
    registers:
@@ -118,6 +146,7 @@ def AE_h5_to_yaml(h5_fileName, yamlFileName):
     #split the weight grouyps into 16 byte registers for test setup
     AE_weight_12_split = [splitTo16Bytes(x) for x in AE_weight_12]
 
+    yamlFileName=h5_fileName.replace('encoder.hdf5','init.yaml')
     writeYaml(yamlFileName, AE_weight_12_split)
 
 if __name__=='__main__':
@@ -125,7 +154,7 @@ if __name__=='__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', type=str, default='encoder.hdf5', dest='h5_file_name', help=".hdf5 file containing model weights")
-    parser.add_argument('--yaml',  type=str, default='AE.yaml', dest='yaml_file_name', help="yaml output file with i2c register values")
+#    parser.add_argument('--yaml',  type=str, default='AE.yaml', dest='yaml_file_name', help="yaml output file with i2c register values")
     args = parser.parse_args()
 
-    AE_h5_to_yaml(args.h5_file_name, args.yaml_file_name)
+    AE_h5_to_yaml(args.h5_file_name)
