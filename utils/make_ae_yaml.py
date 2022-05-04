@@ -111,12 +111,14 @@ ECON-T:
         _file.write(yamlOutput)
     return yamlOutput
 
-def AE_h5_to_yaml(h5_fileName, yamlFileName):
+def AE_h5_to_yaml(h5_fileName):
     f = h5py.File(h5_fileName, 'r')
 
+    conv_key = list(f.keys())[0]
+
     #load conv layer weights (w) and biases (b) and dense layer weights (W) and biases (B)
-    w=f['conv2d_0_m']['conv2d_0_m']['kernel:0'][:]
-    b=f['conv2d_0_m']['conv2d_0_m']['bias:0'][:]
+    w=f[conv_key][conv_key]['kernel:0'][:]
+    b=f[conv_key][conv_key]['bias:0'][:]
     W=f['encoded_vector']['encoded_vector']['kernel:0'][:]
     B=f['encoded_vector']['encoded_vector']['bias:0'][:]
 
