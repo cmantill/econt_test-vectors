@@ -14,7 +14,7 @@ ECON-T:
      params:
       eporttx_numen:
        # Number of output ports enabled
-       param_value: 13
+       param_value: 5
       use_sum:
        param_value: 0
       stc_type:
@@ -46,7 +46,7 @@ ECON-T:
      params:
       select:
        # 0: threshold sum, 1: Super Trigger Cell, 2: Best Choice (disabled), 3: repeater, 4: Autoencoder (Disabled)
-       param_value: 0
+       param_value: 1
       density:
        # 1: high density
        param_value: 1

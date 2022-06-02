@@ -1,27 +1,3 @@
-i2c:
- emulator_addr: 1
-daq:
- elinks_out:
-  - { name : 'link0', polarity: 1, idcode: 0 }
-  - { name : 'link1', polarity: 1, idcode: 1 }
-  - { name : 'link2', polarity: 1, idcode: 2 }
-  - { name : 'link3', polarity: 1, idcode: 3 }
-  - { name : 'link4', polarity: 1, idcode: 4 }
-  - { name : 'link5', polarity: 1, idcode: 5 }
-  - { name : 'link6', polarity: 1, idcode: 6 }
-  - { name : 'link7', polarity: 1, idcode: 7 }
-  - { name : 'link8', polarity: 1, idcode: 8 }
-  - { name : 'link9', polarity: 1, idcode: 9 }
-  - { name : 'link10', polarity: 1, idcode: 10 }
-  - { name : 'link11', polarity: 1, idcode: 11 }
-  - { name : 'link12', polarity: 1, idcode: 12 }
- zmq_push_port: '8888'
- delay_scan_port: '8888'
- verbose: 1
-global:
- data_push_port: '8888'
- serverIP: localhost
- output_directory: data
 ECON-T:
  RW:
   FMTBUF_ALL:

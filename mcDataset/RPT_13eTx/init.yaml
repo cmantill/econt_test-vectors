@@ -4,6 +4,12 @@ ECON-T:
    registers:
     tx_sync_word:
      value: 0b00100100010
+    buff_t1:
+     value: 400
+    buff_t2:
+     value: 500
+    buff_t3:
+     value: 0
     config:
      params:
       eporttx_numen:

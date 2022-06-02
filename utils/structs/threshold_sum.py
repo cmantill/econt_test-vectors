@@ -171,8 +171,9 @@ converters = dict.fromkeys(x_names)
 for key in converters.keys():
     converters[key] = partial(int, base=16)
 #inputFile = "/Users/cmantill/ECON/ECONT_Testing/sync-repo-48/repo/econt_sw/econt_sw/configs/test_vectors/counterPatternInTC_MRLBuf/TS_Thr5_HDM_12eTx_MRL18_T1460_noT2T3/testOutput.csv"
-inputFile = "/Users/cmantill/ECON/ECONT_Testing/sync-repo-48/repo/econt_sw/econt_sw/configs/test_vectors/counterPatternInTC_fillBuf/TS_Thr5_HDM_10eTx_T1480_noT2T3/lc-ASIC_sc.csv"
-n_TX_enabled = 12
+#inputFile = "/Users/cmantill/ECON/ECONT_Testing/sync-repo-48/repo/econt_sw/econt_sw/configs/test_vectors/counterPatternInTC_fillBuf/TS_Thr5_HDM_10eTx_T1480_noT2T3/lc-ASIC_sc.csv"
+inputFile = "/Users/cmantill/ECON/ECONT_Testing/sync-repo-48/repo/econt_sw/econt_sw/configs/test_vectors/randomPatternExpInTC/TS_Thr1/testOutput.csv"
+n_TX_enabled = 13
 nrows = 10
 df = pd.read_csv(inputFile, converters=converters)[0:nrows]
 df = df.iloc[:, :n_TX_enabled]
