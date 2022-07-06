@@ -1,0 +1,296 @@
+
+ECON-T:
+ RW:
+  MFC_ALGORITHM_SEL_DENSITY:
+   registers:
+    algo:
+     params:
+      select:
+       # 0: threshold sum, 1: Super Trigger Cell, 2: Best Choice (disabled), 3: repeater, 4: Autoencoder (Disabled)
+       param_value: 4
+      density:
+       # 1: high density
+       param_value: 1
+
+  MFC_MUX_SELECT:
+   registers:
+    mux_select_*:
+     value: [ 5,  6,  7,  1, 29, 28, 20, 21,
+             13,  4,  0,  2, 31, 30, 22, 23,
+             12, 14, 11,  3, 24, 27, 17, 16,
+             15,  8,  9, 10, 25, 26, 19, 18,
+             34, 35, 43, 41,
+             32, 33, 42, 40,
+             39, 38, 44, 47,
+             36, 37, 45, 46]
+
+  MFC_CAL_VAL:
+   registers:
+    cal_*:
+     value: [2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048]
+
+  FMTBUF_ALL:
+   registers:
+    eporttx_numen:
+     value: 5
+    mask_ae:
+     value: 0xffff_ffff_ffff_ffff_ffff_ffff_ffff_ffff
+    mask_ae2:
+     value: 0xffff
+
+  AUTOENCODER_0INPUT:
+   registers:
+    weights_byte0:
+     value: 0xf4008f7fdefec7cf1513af1fcbdf12
+    weights_byte16:
+     value: 0xf3c48cdc5c857933dfd5fc47f02f3ff
+    weights_byte32:
+     value: 0xcdc03f58012fdbefeff3114ffcdc4f5
+    weights_byte48:
+     value: 0x3e18cf2c07c1c01830c00f7f7f08f10f
+    weights_byte64:
+     value: 0xad0618e032ebeebc3803bed022021baf
+    weights_byte80:
+     value: 0x33e280202e04306fbcc0200008ef801b
+    weights_byte96:
+     value: 0xa6db02b2604004500e0070a106c8011e
+    weights_byte112:
+     value: 0x23a23e186d8c306fb83baf8262ec020
+    weights_byte128:
+     value: 0xe88236e8a18
+
+  AUTOENCODER_1INPUT:
+   registers:
+    weights_byte0:
+     value: 0xd80b06182f30f0cf3e3ba8ba18ef38bb
+    weights_byte16:
+     value: 0x3ef84dbcfb60946be0bc10443c18af12
+    weights_byte32:
+     value: 0x4088130fbc488e36cb8f801ba1381b6d
+    weights_byte48:
+     value: 0x6080f8011613c00230a0b6e04f00e0
+    weights_byte64:
+     value: 0x2436b98e08f84f90f3a20408223c0bc
+    weights_byte80:
+     value: 0x608608413eebc080f881b8f00f84f90d
+    weights_byte96:
+     value: 0xcbc3883341a23b2080402e30f80d3ec8
+    weights_byte112:
+     value: 0x36d881b2434e80c30e02384c3eebc4b8
+    weights_byte128:
+     value: 0x84c84d80386f
+
+  AUTOENCODER_2INPUT:
+   registers:
+    weights_byte0:
+     value: 0x8206f80080004e86208f80f3438ec883
+    weights_byte16:
+     value: 0x306f0a0bcfbed8403c18648450cebed0
+    weights_byte32:
+     value: 0x3c20a00812ee36e04dba0b61bc70ae3e
+    weights_byte48:
+     value: 0x90d3ae0af0c1821860820bce8cf3e1
+    weights_byte64:
+     value: 0x400fb4d88c800b03a6fbac8053ac3ee0
+    weights_byte80:
+     value: 0xba490e00d3233a088f0a386c1403ee02
+    weights_byte96:
+     value: 0xcf0c0841bc502f04f38d3e2b8290e901
+    weights_byte112:
+     value: 0xf86190e04108086f8220a48408803cbb
+    weights_byte128:
+     value: 0xf02184bb2d84
+
+  AUTOENCODER_3INPUT:
+   registers:
+    weights_byte0:
+     value: 0x82ebed04e820b428a08cd8afbcfbe43c
+    weights_byte16:
+     value: 0x6b82d8cd80a34196f044b2382f3e108e
+    weights_byte32:
+     value: 0x1bc104eb8180c322b0084082102c8a2b
+    weights_byte48:
+     value: 0x3c33843ef04006bb81b6e3ed8828633c
+    weights_byte64:
+     value: 0xe096bbc204380304ebee1418603cf3ef
+    weights_byte80:
+     value: 0x3383822b402cb8208e0bc1843be20c38
+    weights_byte96:
+     value: 0x3e0b80b818610ee12100e0ae02106f04
+    weights_byte112:
+     value: 0xe0aebb4fbc108198eba23a50a03ee001
+    weights_byte128:
+     value: 0x3363802b6e3
+
+  AUTOENCODER_4INPUT:
+   registers:
+    weights_byte0:
+     value: 0xfb8084b0ae02e86184e08f02f8010610
+    weights_byte16:
+     value: 0xbaf06ebed3ee00d8610cf08386302f36
+    weights_byte32:
+     value: 0x213840a184e8e118f04200e8610a1bc1
+    weights_byte48:
+     value: 0x202002084fbc482f10d02fb410610ce8
+    weights_byte64:
+     value: 0x9ad14ebee060bc23c13a1bc102e02280
+    weights_byte80:
+     value: 0x803cc08384c041aaf82106cbc53e20a0
+    weights_byte96:
+     value: 0x110f06204438e3e33e006fbceba204e0
+    weights_byte112:
+     value: 0x2106f04b84eba2b8036eba2843bac82
+    weights_byte128:
+     value: 0xb42081820020
+
+  AUTOENCODER_5INPUT:
+   registers:
+    weights_byte0:
+     value: 0x8d0633e3080ba08a00a084f00406f3ef
+    weights_byte16:
+     value: 0x13e1882bee820b413818e282e3c084d0
+    weights_byte32:
+     value: 0x8818c104d3e300f0af3ef060badb8f8a
+    weights_byte48:
+     value: 0xc03ef86d022861b6d3e334d86e80d8af
+    weights_byte64:
+     value: 0x1be132ebec82008002f10a80184db818
+    weights_byte80:
+     value: 0x3a23c082086e88004f88fb823c188db6
+    weights_byte96:
+     value: 0xe0010c20cd82f900bef82084306f841
+    weights_byte112:
+     value: 0x8218400200af88e0208a1ba13ee8028
+    weights_byte128:
+     value: 0xf00082000f0c
+
+  AUTOENCODER_6INPUT:
+   registers:
+    weights_byte0:
+     value: 0xb4186b86cbef0c2bc138f18d0810813c
+    weights_byte16:
+     value: 0x81be034e8023a082d3c03e00ee36182d
+    weights_byte32:
+     value: 0x384008eb64345bee0cfbaf36200e80e8
+    weights_byte48:
+     value: 0xad0c30628c206e3c0acfb8f8ae8003c
+    weights_byte64:
+     value: 0x2186fbae340b418200618808a2b22883
+    weights_byte80:
+     value: 0xf843063023b6000208e0633e23ad88f1
+    weights_byte96:
+     value: 0x84c38008608e80e8cf3a0b6ebcb000be
+    weights_byte112:
+     value: 0xa202fbe236284e0043a0084043bc43ab
+    weights_byte128:
+     value: 0x6dba1344befb
+
+  AUTOENCODER_7INPUT:
+   registers:
+    weights_byte0:
+     value: 0xe880b82ba084f3a2024bc08afb813420
+    weights_byte16:
+     value: 0xb6c021bc03c1060882002800040803b8
+    weights_byte32:
+     value: 0x81841b6e82d36ebc3b4006386ebee821
+    weights_byte48:
+     value: 0x3bcf0018ceb4084f88192084e8a18628
+    weights_byte64:
+     value: 0x8a0b8f8c2b6fbc18edbe4822842803a4
+    weights_byte80:
+     value: 0x608ef3c388c3038a21ad12b9c8963bc1
+    weights_byte96:
+     value: 0x63240632a2b4a86cacab0e9c6aa58a81
+    weights_byte112:
+     value: 0x82a0e78a9b4012fba6b6430e081a4018
+    weights_byte128:
+     value: 0xa48b8f3013ae
+
+  AUTOENCODER_8INPUT:
+   registers:
+    weights_byte0:
+     value: 0xed04fa623cdb662ad0ca2e8209aee369
+    weights_byte16:
+     value: 0xeac49a098e922b2a9279a01ae2220ac0
+    weights_byte32:
+     value: 0x36604dacb1ec80580a22a0ac10814510
+    weights_byte48:
+     value: 0xe78008870c70a99adbcc947a4a8eb1c1
+    weights_byte64:
+     value: 0xaa9ae78ef0833251cb8ae9c992eae38
+    weights_byte80:
+     value: 0x2aa798110f3ed1ccbcab08be59e900
+    weights_byte96:
+     value: 0xe8b0db8c386becaa2226bea3ed2ea365
+    weights_byte112:
+     value: 0x2ed0aeb268a4b8b9229801cda400eb2
+    weights_byte128:
+     value: 0x31851ec1ac38
+
+  AUTOENCODER_9INPUT:
+   registers:
+    weights_byte0:
+     value: 0x881b6e38e0c010138e009305bcba4600
+    weights_byte16:
+     value: 0xe80f34f8233618c010d0c43ad02f042
+    weights_byte32:
+     value: 0x386c3a01e58408028c10428e28408820
+    weights_byte48:
+     value: 0xcd88c0ad3c234402d84f00e36f0208a
+    weights_byte64:
+     value: 0xadbef8629828c28c20813e01838a100f
+    weights_byte80:
+     value: 0xe82e94f36d82c3633c0bad8ac804863b
+    weights_byte96:
+     value: 0x3c200186f040b81302bec88f8613cf36
+    weights_byte112:
+     value: 0xc004038b80f00e0a186f32fb6006232f
+    weights_byte128:
+     value: 0x400c00a13e33
+
+  AUTOENCODER_10INPUT:
+   registers:
+    weights_byte0:
+     value: 0x18413a286080ebcfbae0438638a11018
+    weights_byte16:
+     value: 0x20bcf042b8102500188c80d02eb6e06
+    weights_byte32:
+     value: 0x6094016c82c00f80084106106d84038f
+    weights_byte48:
+     value: 0x1bad0a03cf8009003e2bae0013afbe40
+    weights_byte64:
+     value: 0x2cd0cc80da2faae8af86e224b4528a02
+    weights_byte80:
+     value: 0xea10c30fa2412b3a8028baa2678cf8e8
+    weights_byte96:
+     value: 0xe8e006a8ecb851c226cae5061b4c3478
+    weights_byte112:
+     value: 0xa0f90c8ef94ba02982049b2d26e22620
+    weights_byte128:
+     value: 0x2e538a342346
+
+  AUTOENCODER_11INPUT:
+   registers:
+    weights_byte0:
+     value: 0x4028c1263e1ac9987868364a06a09ae1
+    weights_byte16:
+     value: 0x4a00903862261bed9a53602e09a38ceb
+    weights_byte32:
+     value: 0xa8d0e6aa126a02e0a4be82e89e30000e
+    weights_byte48:
+     value: 0x262ea2cd2ea32faab168a4da2f082227
+    weights_byte64:
+     value: 0xc16a127a64b42345987b4b326a402ec9
+    weights_byte80:
+     value: 0x6920324e0a5b26a223800ac1269c392
+    weights_byte96:
+     value: 0x431af38b088b20ae7a0e96c1a586e044
+    weights_byte112:
+     value: 0xd240303bee8ab16f1a32
+    weights_byte128:
+     value: 0x0

@@ -1,0 +1,296 @@
+
+ECON-T:
+ RW:
+  MFC_ALGORITHM_SEL_DENSITY:
+   registers:
+    algo:
+     params:
+      select:
+       # 0: threshold sum, 1: Super Trigger Cell, 2: Best Choice (disabled), 3: repeater, 4: Autoencoder (Disabled)
+       param_value: 4
+      density:
+       # 1: high density
+       param_value: 1
+
+  MFC_MUX_SELECT:
+   registers:
+    mux_select_*:
+     value: [ 5,  6,  7,  1, 29, 28, 20, 21,
+             13,  4,  0,  2, 31, 30, 22, 23,
+             12, 14, 11,  3, 24, 27, 17, 16,
+             15,  8,  9, 10, 25, 26, 19, 18,
+             34, 35, 43, 41,
+             32, 33, 42, 40,
+             39, 38, 44, 47,
+             36, 37, 45, 46]
+
+  MFC_CAL_VAL:
+   registers:
+    cal_*:
+     value: [2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
+             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048]
+
+  FMTBUF_ALL:
+   registers:
+    eporttx_numen:
+     value: 5
+    mask_ae:
+     value: 0xffff_ffff_ffff_ffff_ffff_ffff_ffff_ffff
+    mask_ae2:
+     value: 0xffff
+
+  AUTOENCODER_0INPUT:
+   registers:
+    weights_byte0:
+     value: 0xf4008f7fdefec7cf1513af1fcbdf12
+    weights_byte16:
+     value: 0xf3c48cdc5c857933dfd5fc47f02f3ff
+    weights_byte32:
+     value: 0xcdc03f58012fdbefeff3114ffcdc4f5
+    weights_byte48:
+     value: 0x2000082007c1c01830c00f7f7f08f10f
+    weights_byte64:
+     value: 0x8000000208208200000208000000208
+    weights_byte80:
+     value: 0x2000000080000082080000000080002
+    weights_byte96:
+     value: 0x20820020000000000800000000800000
+    weights_byte112:
+     value: 0x200200008000008200208000208000
+    weights_byte128:
+     value: 0x80002080000
+
+  AUTOENCODER_1INPUT:
+   registers:
+    weights_byte0:
+     value: 0x80080000082080082002082000082082
+    weights_byte16:
+     value: 0x20800820820000020020000020000800
+    weights_byte32:
+     value: 0x208200008208208000200200208
+    weights_byte48:
+     value: 0x80000002000000002080080080
+    weights_byte64:
+     value: 0x20800800800800820000000020020
+    weights_byte80:
+     value: 0x208200008000208008008008
+    weights_byte96:
+     value: 0x82000002002002000000082080082080
+    weights_byte112:
+     value: 0x20800020020800820800000820820020
+    weights_byte128:
+     value: 0x8008000008
+
+  AUTOENCODER_2INPUT:
+   registers:
+    weights_byte0:
+     value: 0x8000000008000008008200008000
+    weights_byte16:
+     value: 0x80002082080002000000000082080
+    weights_byte32:
+     value: 0x20000000020820800820020020000820
+    weights_byte48:
+     value: 0x8208008000000000000208008200
+    weights_byte64:
+     value: 0x82080080002002082080002082080
+    weights_byte80:
+     value: 0x20000800820020000800000800020800
+    weights_byte96:
+     value: 0x8000000200008008208200200008000
+    weights_byte112:
+     value: 0x80000080000000080000000000002082
+    weights_byte128:
+     value: 0x800000820800
+
+  AUTOENCODER_3INPUT:
+   registers:
+    weights_byte0:
+     value: 0x820800800020000000800820820020
+    weights_byte16:
+     value: 0x8008008008200008000200008200008
+    weights_byte32:
+     value: 0x2000082000082002000000000080002
+    weights_byte48:
+     value: 0x20020020800000820020820800000020
+    weights_byte64:
+     value: 0x8200000000008208000000208208
+    weights_byte80:
+     value: 0x2000002002080000002000002000000
+    weights_byte96:
+     value: 0x20020020000000800000800800000800
+    weights_byte112:
+     value: 0x208208200000008200200000208000
+    weights_byte128:
+     value: 0x2000002082
+
+  AUTOENCODER_4INPUT:
+   registers:
+    weights_byte0:
+     value: 0x82000080080080000080080080000000
+    weights_byte16:
+     value: 0x20800820820800800000800000000820
+    weights_byte32:
+     value: 0x200000008000008000008000000200
+    weights_byte48:
+     value: 0x82000080080082000000080
+    weights_byte64:
+     value: 0x800820800020020020020000800000
+    weights_byte80:
+     value: 0x208000008000208000008200200000
+    weights_byte96:
+     value: 0x80000002082002000082082000080
+    weights_byte112:
+     value: 0x800800820020020820000020800
+    weights_byte128:
+     value: 0x200000000000
+
+  AUTOENCODER_5INPUT:
+   registers:
+    weights_byte0:
+     value: 0x8000200000200000000008000008208
+    weights_byte16:
+     value: 0x2000002080002002000000082000080
+    weights_byte32:
+     value: 0x820000800820800020820800
+    weights_byte48:
+     value: 0x208008000000208200208008008008
+    weights_byte64:
+     value: 0x2002082080000000080080000082000
+    weights_byte80:
+     value: 0x20020000000800000800820020000820
+    weights_byte96:
+     value: 0x8000000008008000208000000008000
+    weights_byte112:
+     value: 0x80080000002002080000
+    weights_byte128:
+     value: 0x800000000800
+
+  AUTOENCODER_6INPUT:
+   registers:
+    weights_byte0:
+     value: 0x20000800820800020020800800000020
+    weights_byte16:
+     value: 0x200208000200008200200008200008
+    weights_byte32:
+     value: 0x82002002080082082000080080
+    weights_byte48:
+     value: 0x800000000000820020820800800020
+    weights_byte64:
+     value: 0x8208200200000000000000200000
+    weights_byte80:
+     value: 0x80000000002000000080002002080080
+    weights_byte96:
+     value: 0x820000000800800820020820800020
+    weights_byte112:
+     value: 0x8200200008000200000000200208
+    weights_byte128:
+     value: 0x82002002082
+
+  AUTOENCODER_7INPUT:
+   registers:
+    weights_byte0:
+     value: 0x80002002000082000002000082002000
+    weights_byte16:
+     value: 0x20800020020000000000000000000020
+    weights_byte32:
+     value: 0x208008208200200000008208000
+    weights_byte48:
+     value: 0x2080000082000080000000080000000
+    weights_byte64:
+     value: 0x20800020820000820000000000020
+    weights_byte80:
+     value: 0x8200008200000008008008000200
+    weights_byte96:
+     value: 0x2000002002080082082080002000080
+    weights_byte112:
+     value: 0x800000820000820020020800020000
+    weights_byte128:
+     value: 0x208208200208
+
+  AUTOENCODER_8INPUT:
+   registers:
+    weights_byte0:
+     value: 0x8008200208200208008208208208208
+    weights_byte16:
+     value: 0x82000000080002080000000082000080
+    weights_byte32:
+     value: 0x20000820800800000820800800800000
+    weights_byte48:
+     value: 0x8008208000208008000
+    weights_byte64:
+     value: 0x2082000080002000080080080082000
+    weights_byte80:
+     value: 0x20000000820800820820820000800
+    weights_byte96:
+     value: 0x8208208200208200200208208208200
+    weights_byte112:
+     value: 0x2080082000002080000000082000082
+    weights_byte128:
+     value: 0x800820
+
+  AUTOENCODER_9INPUT:
+   registers:
+    weights_byte0:
+     value: 0x20820800000020800820020820000
+    weights_byte16:
+     value: 0x8008208000200000008000208008000
+    weights_byte32:
+     value: 0x82000000000000000000000000000
+    weights_byte48:
+     value: 0x800800820020000800800820800000
+    weights_byte64:
+     value: 0x8208000000000000000200000000008
+    weights_byte80:
+     value: 0x80080082080082002002080080000002
+    weights_byte96:
+     value: 0x20000000800020020020800800020820
+    weights_byte112:
+     value: 0x208008008000008208200000208
+    weights_byte128:
+     value: 0x2002
+
+  AUTOENCODER_10INPUT:
+   registers:
+    weights_byte0:
+     value: 0x2000000082082080000000000000
+    weights_byte16:
+     value: 0x20800020000000000800800820800
+    weights_byte32:
+     value: 0x8008008000000000008000208
+    weights_byte48:
+     value: 0x2080002080000002002080002082000
+    weights_byte64:
+     value: 0x20800800820820800800820020020800
+    weights_byte80:
+     value: 0x8008208200008208008208200008008
+    weights_byte96:
+     value: 0x80000080082000002082000002082000
+    weights_byte112:
+     value: 0x20800800800820000000820820820020
+    weights_byte128:
+     value: 0x200208200200
+
+  AUTOENCODER_11INPUT:
+   registers:
+    weights_byte0:
+     value: 0x208000200208000008200200208200
+    weights_byte16:
+     value: 0x2000000002002080002002000000082
+    weights_byte32:
+     value: 0x20800020020800800020820800000000
+    weights_byte48:
+     value: 0x208208208208208008208208000200
+    weights_byte64:
+     value: 0x80080002002002000002082002002080
+    weights_byte80:
+     value: 0x820020800020020020000800000000
+    weights_byte96:
+     value: 0x8208008200200208008000008000
+    weights_byte112:
+     value: 0x82002002080080080002
+    weights_byte128:
+     value: 0x0
