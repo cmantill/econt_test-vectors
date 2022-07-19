@@ -39,8 +39,9 @@ def i2cDictToWeights(i2cDict):
     _B=wbWB[2128:]
     return _w,_b,_W,_B
 
-def writeYaml(fName, AE_weight_12_split):
-    yamlOutput="""
+def writeYaml(fName, AE_weight_12_split,cal=[2048]*48):
+
+    yamlOutput=f"""
 ECON-T:
  RW:
   MFC_ALGORITHM_SEL_DENSITY:
@@ -69,15 +70,17 @@ ECON-T:
   MFC_CAL_VAL:
    registers:
     cal_*:
-     value: [2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
-             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
-             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
-             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
-             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
-             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048]
+     value: [{cal[0]}, {cal[1]}, {cal[2]}, {cal[3]}, {cal[4]}, {cal[5]}, {cal[6]}, {cal[7]},
+             {cal[8]}, {cal[9]}, {cal[10]}, {cal[11]}, {cal[12]}, {cal[13]}, {cal[14]}, {cal[15]},
+             {cal[16]}, {cal[17]}, {cal[18]}, {cal[19]}, {cal[20]}, {cal[21]}, {cal[22]}, {cal[23]},
+             {cal[24]}, {cal[25]}, {cal[26]}, {cal[27]}, {cal[28]}, {cal[29]}, {cal[30]}, {cal[31]},
+             {cal[32]}, {cal[33]}, {cal[34]}, {cal[35]}, {cal[36]}, {cal[37]}, {cal[38]}, {cal[39]},
+             {cal[40]}, {cal[41]}, {cal[42]}, {cal[43]}, {cal[44]}, {cal[45]}, {cal[46]}, {cal[47]}]
 
   FMTBUF_ALL:
    registers:
+    eporttx_numen:
+     value: 5
     mask_ae:
      value: 0xffff_ffff_ffff_ffff_ffff_ffff_ffff_ffff
     mask_ae2:
@@ -111,7 +114,7 @@ ECON-T:
         _file.write(yamlOutput)
     return yamlOutput
 
-def AE_h5_to_yaml(h5_fileName):
+def AE_h5_to_yaml(h5_fileName,cal=[2048]*48):
     f = h5py.File(h5_fileName, 'r')
 
     conv_key = list(f.keys())[0]
@@ -127,6 +130,9 @@ def AE_h5_to_yaml(h5_fileName):
     b=np.maximum(np.minimum(b,.99999),-1)
     W=np.maximum(np.minimum(W,.99999),-1)
     B=np.maximum(np.minimum(B,.99999),-1)
+
+    if W.shape==(128,16):
+        W=W.T
 
     #convert to binary representations
     w_bin=toBinary(w.flatten())
@@ -149,7 +155,7 @@ def AE_h5_to_yaml(h5_fileName):
     AE_weight_12_split = [splitTo16Bytes(x) for x in AE_weight_12]
 
     yamlFileName=h5_fileName.replace('encoder.hdf5','init.yaml')
-    writeYaml(yamlFileName, AE_weight_12_split)
+    writeYaml(yamlFileName, AE_weight_12_split,cal)
 
 if __name__=='__main__':
     import argparse
