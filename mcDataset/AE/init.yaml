@@ -1,307 +1,232 @@
-ECON-T:
- RW:
-  MFC_ALGORITHM_SEL_DENSITY:
-   registers:
-    algo:
-     params:
-      select:
-       # 0: threshold sum, 1: Super Trigger Cell, 2: Best Choice (disabled), 3: repeater, 4: Autoencoder (Disabled)
-       param_value: 4
-      density:
-       # 1: high density
-       param_value: 1
-
-  MFC_MUX_SELECT:
-   registers:
-    mux_select_*:
-     value: [ 5,  6,  7,  1, 29, 28, 20, 21,
-             13,  4,  0,  2, 31, 30, 22, 23,
-             12, 14, 11,  3, 24, 27, 17, 16,
-             15,  8,  9, 10, 25, 26, 19, 18,
-             34, 35, 43, 41,
-             32, 33, 42, 40,
-             39, 38, 44, 47,
-             36, 37, 45, 46]
-
-  MFC_CAL_VAL:
-   registers:
-    cal_*:
-     value: [2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
-             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
-             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
-             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
-             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048,
-             2048, 2048, 2048, 2048, 2048, 2048, 2048, 2048]
-
-
-
-  FMTBUF_ALL:
-   registers:
-    tx_sync_word:
-     value: 0b00100100010
-    buff_t1:
-     value: 338 # default for eRx = 13
-    buff_t2:
-     value: 314 # default for eRx = 13
-    buff_t3:
-     value: 25 # default for eRx = 13
-    mask_ae:
-     value: 0xffff_ffff_ffff_ffff_ffff_ffff_ffff_ffff
-    mask_ae2:
-     value: 0xffff
-    config:
-     params:
-      eporttx_numen:
-       param_value: 5
- 
-  AUTOENCODER_0INPUT:
-   registers:
-    weights_byte0:
-     value: 0x3ff3f04e7fcefdc3bed413aedec7cf12
-    weights_byte16:
-     value: 0xff3c48bdc4c447533dfd5ec46ec1f3ef
-    weights_byte32:
-     value: 0xcdbc2f58fd2f9befeff20d3fbbdc4f4
-    weights_byte48:
-     value: 0xfd1cbf2c03c1801820ff0f6f7e08f10f
-    weights_byte64:
-     value: 0xacc71ceff1e7de7c3803fed021c1179e
-    weights_byte80:
-     value: 0x33f2bf202dc5346fbdc4103f08ef8117
-    weights_byte96:
-     value: 0xa7db12b15c30444c0dc0709105cff0de
-    weights_byte112:
-     value: 0x23927e187d8d306ff83baf8262ec030
-    weights_byte128:
-     value: 0x1ec71f6eca18
-
-  AUTOENCODER_1INPUT:
-   registers:
-    weights_byte0:
-     value: 0xdc1b46181f30f0deff3b98fb18df38bb
-    weights_byte16:
-     value: 0xfff84dfcfb605567f07c14343b18af13
-    weights_byte32:
-     value: 0x404912fffd489e37cb8f801fb138175c
-    weights_byte48:
-     value: 0x50bff800d617d0413490b7e04ec1e0
-    weights_byte64:
-     value: 0x42476b98e07fc4f4fef91c508127d0bb
-    weights_byte80:
-     value: 0x50870c417ee7b080f491f9f00f85f8fd
-    weights_byte96:
-     value: 0xc7b3c73351633720403c3e30fc0d3fcc
-    weights_byte112:
-     value: 0xf6dc71f2434effc2fe43345c7debb4b7
-    weights_byte128:
-     value: 0xc4c84dbf345e
-
-  AUTOENCODER_2INPUT:
-   registers:
-    weights_byte0:
-     value: 0x7206f400bf004ec51c8f80ef434dc883
-    weights_byte16:
-     value: 0x2c7f0907dfbddc507c14748550cebdd0
-    weights_byte32:
-     value: 0x3d20a04812ee76dc3db90771bb749e7e
-    weights_byte48:
-     value: 0xf090d7ae4bf0d1c11470820bce8df3f1
-    weights_byte64:
-     value: 0x401f74d89c400f13a7ffacc157ac3fe3
-    weights_byte80:
-     value: 0x7a491e40d322fb088f0b386c5403de02
-    weights_byte96:
-     value: 0xcf4c04517c503f03ef8d3e2b928fe901
-    weights_byte112:
-     value: 0xf4714fe051080c5f821ca484049ffdbf
-    weights_byte128:
-     value: 0xf02184bb1d83
-
-  AUTOENCODER_3INPUT:
-   registers:
-    weights_byte0:
-     value: 0x81ebdd04e820b424b0cbdcbfbcf7f43c
-    weights_byte16:
-     value: 0x5b42dccdffa34196f04471343f7d107e
-    weights_byte32:
-     value: 0x17d104eb8180bf3270084082101c8a2b
-    weights_byte48:
-     value: 0x7c33847ef05007bb91b5e7fdc828637c
-    weights_byte64:
-     value: 0xf096b7d203341343ebee5414503cf3ef
-    weights_byte80:
-     value: 0x3383432f402cbc204d07d14437d24b34
-    weights_byte96:
-     value: 0x3e0b80b814610fdd2101dcae02105ec4
-    weights_byte112:
-     value: 0xd0aebb4ffc108197e7a23a54affde001
-    weights_byte128:
-     value: 0x3373bf2b6e3
-
-  AUTOENCODER_4INPUT:
-   registers:
-    weights_byte0:
-     value: 0xf77044b0bdc3ec6185e08f03f800c510
-    weights_byte16:
-     value: 0xbbec5efed7de01dc510cec8386343f76
-    weights_byte32:
-     value: 0x31383c9145e8e118f051c1ec51091bd1
-    weights_byte48:
-     value: 0x2020420c3ffb442ed1d02fb410610de4
-    weights_byte64:
-     value: 0xdbcd4ebde460fb23d13917c143e42280
-    weights_byte80:
-     value: 0x803dbc8383c0416af43107cfc4fd24b0
-    weights_byte96:
-     value: 0xd0f07204438e3f2ff007fbcef9204e0
-    weights_byte112:
-     value: 0x20c6f04bc4eba2b9ff6eba2843fbc81
-    weights_byte128:
-     value: 0x742071420010
-
-  AUTOENCODER_5INPUT:
-   registers:
-    weights_byte0:
-     value: 0x8d4637d2c80f9089fc90c4f41406f7df
-    weights_byte16:
-     value: 0xfe18827ee410b317818e2c1e3b084d0
-    weights_byte32:
-     value: 0x881cc105cfe2c0f0aefef070f9db7f8a
-    weights_byte48:
-     value: 0xcffef85d422461b6cff335d46e40dc9f
-    weights_byte64:
-     value: 0x1ff133effcc1fc7fc1f50ac01c3df91c
-    weights_byte80:
-     value: 0x7923d041085ec9005fc7fb827c1c8db5
-    weights_byte96:
-     value: 0x1dff14c1ccd83f510bff81044346f851
-    weights_byte112:
-     value: 0x41144003fcbfc7e020891fa0ffebf24
-    weights_byte128:
-     value: 0xeff042fc1f0c
-
-  AUTOENCODER_6INPUT:
-   registers:
-    weights_byte0:
-     value: 0x74186b85cfff0c2bc138f18cc80c917b
-    weights_byte16:
-     value: 0x81be033e811fb0c1cfcffe00ee37142d
-    weights_byte32:
-     value: 0x383008e773f35bfe0bfb9f35201e7fe4
-    weights_byte48:
-     value: 0xbd0c3072cc206e3d0acff7f89e4007d
-    weights_byte64:
-     value: 0x2186ffae330b51c2fc718908a2b12883
-    weights_byte80:
-     value: 0xf842c53023b6001249e0633f1f9d49f1
-    weights_byte96:
-     value: 0x85c38fc75c8ec0eccefb0f6e7dac00bd
-    weights_byte112:
-     value: 0x9242fbe276244dc13fb0093c33fc43ab
-    weights_byte128:
-     value: 0x6dbb1344befb
-
-  AUTOENCODER_7INPUT:
-   registers:
-    weights_byte0:
-     value: 0xe870f92ba0c4f3b2024fc0caff913520
-    weights_byte16:
-     value: 0x77c011bcffc1070c82402bffc50c03b8
-    weights_byte32:
-     value: 0x91841b7ec3d37efc3b4fc5387efde831
-    weights_byte48:
-     value: 0x3fcec018bef5043fc7192084e8a14628
-    weights_byte64:
-     value: 0x890b7f8d277fbc18dd7e44228527f3a3
-    weights_byte80:
-     value: 0x303009040f800092090bcf3b2ca3bc1
-    weights_byte96:
-     value: 0x2c0f83102049041142ec1e7b0bb1c128
-    weights_byte112:
-     value: 0x83084f7d08200a2bd20620933f084146
-    weights_byte128:
-     value: 0x3c1ff13cf061
-
-  AUTOENCODER_8INPUT:
-   registers:
-    weights_byte0:
-     value: 0x1148fbe1f81bd208e84043f42f451bb0
-    weights_byte16:
-     value: 0x8300300508704317ef45180ffd20724
-    weights_byte32:
-     value: 0x441413c703c0fc0bafc30821c117f406
-    weights_byte48:
-     value: 0xdf07fc22002fb1c3048000202ebf03d0
-    weights_byte64:
-     value: 0x8903c0c80060ff1063421441071810b
-    weights_byte80:
-     value: 0x7c041345105fc0003f841c118a0bc349
-    weights_byte96:
-     value: 0x417efc5ffc2bf205f821c1f82e43008f
-    weights_byte112:
-     value: 0x1bbf8707f082f84188f84144f0214904
-    weights_byte128:
-     value: 0xbff02147291
-
-  AUTOENCODER_9INPUT:
-   registers:
-    weights_byte0:
-     value: 0x881b5e37e4c010138e00f8b240e08007
-    weights_byte16:
-     value: 0xfe40f35f8237618c011d4c3f9d01f042
-    weights_byte32:
-     value: 0x3c7c7afdd5440ff28b14424d2c304823
-    weights_byte48:
-     value: 0xcd48c0ad3c274402d43ec0e36f4208a
-    weights_byte64:
-     value: 0xbdbff852d824d28c20813e01934a100f
-    weights_byte80:
-     value: 0xec2ed3f37dc2c3733c0badcac7f4473b
-    weights_byte96:
-     value: 0xfc200146f040b70f02bec87f8517cef6
-    weights_byte112:
-     value: 0xc044ff9b81f41dc91c7f72fb6007232e
-    weights_byte128:
-     value: 0x300c00a13f2f
-
-  AUTOENCODER_10INPUT:
-   registers:
-    weights_byte0:
-     value: 0x1841392c6040e7cfbae4534538911014
-    weights_byte16:
-     value: 0x30fdf442b81434c0188cc0cc3e76e06
-    weights_byte32:
-     value: 0x60d5016c83bc1f410c5146147d84039f
-    weights_byte48:
-     value: 0x1bad4903cf8008f03f2b9e7f17bfbe40
-    weights_byte64:
-     value: 0x51f9201f831c407dfc4e030b6e86284
-    weights_byte80:
-     value: 0x81052c418814438a1c82800002010862
-    weights_byte96:
-     value: 0x2c42c704517d1c60862be1c61822861c
-    weights_byte112:
-     value: 0xbc2bc2820c213f087fbafbf1c10c2147
-    weights_byte128:
-     value: 0x8010504a0020
-
-  AUTOENCODER_11INPUT:
-   registers:
-    weights_byte0:
-     value: 0x22cefc4ff9e89f070071c72be2fd17e2
-    weights_byte16:
-     value: 0x14503f002241f850c003bf7c1fcf4a00
-    weights_byte32:
-     value: 0x504a1460401c90fb24a13efbe23df45
-    weights_byte48:
-     value: 0xc0c918d2070840421c60483c33851461
-    weights_byte64:
-     value: 0xfd24a045149fc6143201fcaf891bd2b
-    weights_byte80:
-     value: 0x1fbcf3c1bdf870fb23f003079f7cf80
-    weights_byte96:
-     value: 0xe18af81f8907b101f40fc10421432031
-    weights_byte112:
-     value: 0x144144202146f7f13bfbbf8800623a13
-    weights_byte128:
-     value: 0x1051bf105083
+Algorithm:
+  Global:
+    density: 1
+    select: 4
+Cal:
+  0: 2048
+  1: 2048
+  2: 2048
+  3: 2048
+  4: 2048
+  5: 2048
+  6: 2048
+  7: 2048
+  8: 2048
+  9: 2048
+  10: 2048
+  11: 2048
+  12: 2048
+  13: 2048
+  14: 2048
+  15: 2048
+  16: 2048
+  17: 2048
+  18: 2048
+  19: 2048
+  20: 2048
+  21: 2048
+  22: 2048
+  23: 2048
+  24: 2048
+  25: 2048
+  26: 2048
+  27: 2048
+  28: 2048
+  29: 2048
+  30: 2048
+  31: 2048
+  32: 2048
+  33: 2048
+  34: 2048
+  35: 2048
+  36: 2048
+  37: 2048
+  38: 2048
+  39: 2048
+  40: 2048
+  41: 2048
+  42: 2048
+  43: 2048
+  44: 2048
+  45: 2048
+  46: 2048
+  47: 2048
+Encoder:
+  0:
+    weights_byte0: 85007965868730048955930169978089099026
+    weights_byte112: 2955225794860025896594804295070564400
+    weights_byte128: 33840574679576
+    weights_byte16: 339266152105176163573607932787328938991
+    weights_byte32: 17091803204312452363400286204814279924
+    weights_byte48: 336443944673058521735602828009389224207
+    weights_byte64: 229661069267719903881547891481952458654
+    weights_byte80: 69051040114496867182452700779237048599
+    weights_byte96: 223118567443388680647208891817776902366
+  1:
+    weights_byte0: 292571772767663289569409389331954481339
+    weights_byte112: 328134703378298507575743937718721950903
+    weights_byte128: 216364576879710
+    weights_byte16: 340242410334903817277917128815954931475
+    weights_byte32: 85450014765849462457155952025097738076
+    weights_byte48: 419277337760209798337080237717635552
+    weights_byte64: 88099883128747819152472904814501023931
+    weights_byte80: 107039448316716485426511038891629607165
+    weights_byte96: 265449832564211637540011956553800040396
+  2:
+    weights_byte0: 151568094267686918340917790778636224643
+    weights_byte112: 324919980599079015820027880029756063167
+    weights_byte128: 264026751442307
+    weights_byte16: 59145636681098476556848834100744601040
+    weights_byte32: 81252312138176283849374106961931705982
+    weights_byte48: 319766784263276395736155713077817242609
+    weights_byte64: 85233922854003426179870327033991806947
+    weights_byte80: 162545466764666915396216765964165045762
+    weights_byte96: 275544897274318963718055553233388038401
+  3:
+    weights_byte0: 172695084019284947781085766084678120508
+    weights_byte112: 277386681924278460336126526929766309889
+    weights_byte128: 3535763846883
+    weights_byte16: 121306917660092804000598192315436961918
+    weights_byte32: 31657533734822661184223857838082787883
+    weights_byte48: 165091765952304156206227690493842056060
+    weights_byte64: 319797291837023040042371387382531159023
+    weights_byte80: 68472181338526976535148279546588056372
+    weights_byte96: 82471861736826878177937884114330869444
+  4:
+    weights_byte0: 328902245413769295794278075068124808464
+    weights_byte112: 2723015276529262295069670894523628673
+    weights_byte128: 127682687926288
+    weights_byte16: 249792944007657176863540836612693049206
+    weights_byte32: 65424168871834611248359384059799477201
+    weights_byte48: 42702788974163531582512543631142882788
+    weights_byte64: 292166949005647840948684401291531920000
+    weights_byte80: 170461737081509591070429915782164849840
+    weights_byte96: 17357992931364111753757607936113378528
+  5:
+    weights_byte0: 187785740418128723268558109142111680479
+    weights_byte112: 5406560253331963795805548073015230244
+    weights_byte128: 263815195008780
+    weights_byte16: 21109448301284574367794054989756794064
+    weights_byte32: 180924306704319376634674528338952552330
+    weights_byte48: 276474075955816244769138883192099495071
+    weights_byte64: 42458464828884650214093024750760491292
+    weights_byte80: 161022541773642130871168700256792382901
+    weights_byte96: 39872068579312748630641711999590266961
+  6:
+    weights_byte0: 154317243455200012838369706307457159547
+    weights_byte112: 194415087804199380535910360582568297387
+    weights_byte128: 120650249584379
+    weights_byte16: 172457013658712529372470732939588998189
+    weights_byte32: 74686178610032310142515467343001190372
+    weights_byte48: 15705461338531073002050150981215453309
+    weights_byte64: 44565477455892519159449860530001488003
+    weights_byte80: 329995233996018155347670582930119150065
+    weights_byte96: 177802737506430964443903458964683882685
+  7:
+    weights_byte0: 308967486046814382438182757409506800928
+    weights_byte112: 174172018039085874473239731857170907462
+    weights_byte128: 66107888955489
+    weights_byte16: 159175412270253524015264045086637032376
+    weights_byte32: 193424000242552434144557207343566022705
+    weights_byte48: 84814873070526034705301116329752872488
+    weights_byte64: 182163937737392273190855266600923689891
+    weights_byte80: 4003272306892608555859418397979327425
+    weights_byte96: 58566574540714790526248160359317881128
+  8:
+    weights_byte0: 22975830090091075001465263245918280624
+    weights_byte112: 36883623340501246290278256557699451140
+    weights_byte128: 13189879460497
+    weights_byte16: 10883115087639835238271190032301819684
+    weights_byte32: 90491750783893544669133613625947714566
+    weights_byte48: 296459302999081288126711709987810247632
+    weights_byte64: 11382732648843921526795776130989261067
+    weights_byte80: 164845431502356905225509982238432543561
+    weights_byte96: 87059167902133828304025954012859924623
+  9:
+    weights_byte0: 180917110416775452517663501869014614023
+    weights_byte112: 255570035712117021588617994671137170222
+    weights_byte128: 52828108308271
+    weights_byte16: 337961154120823989745845012063232061506
+    weights_byte32: 80400019122252621970146649167595849763
+    weights_byte48: 17054343278590927968271269753798271114
+    weights_byte64: 252220856504513561572574136678159618063
+    weights_byte80: 313940951540523690368744199819881629499
+    weights_byte96: 335131634340007532185589905464025927414
+  10:
+    weights_byte0: 32240130807818330412295880170577924116
+    weights_byte112: 250122077063359429308138414371341345095
+    weights_byte128: 140807554859040
+    weights_byte16: 4070096818553559979284464756731637254
+    weights_byte32: 128711875706040959209832013248336233375
+    weights_byte48: 36788904160522989611503975947430772288
+    weights_byte64: 6810062569381900209086518485299257988
+    weights_byte80: 171497270558514404641768962002992040034
+    weights_byte96: 58832759948842909300520039192979473948
+  11:
+    weights_byte0: 46268482513133262239131753424879425506
+    weights_byte112: 26923440960956131029964515608252004883
+    weights_byte128: 17943283912835
+    weights_byte16: 27001221466788376872259363410593925632
+    weights_byte32: 6670180181516381042791359958093127493
+    weights_byte48: 256255930277190333512757713405080835169
+    weights_byte64: 21030303517447101387102810357403598123
+    weights_byte80: 2636697728381187891273686872332160896
+    weights_byte96: 299797868554147365893715677488508772401
+FormatterBuffer:
+  Global:
+    active_etxs: 5
+    buff_t1: 338
+    buff_t2: 314
+    buff_t3: 25
+    mask_ae: 340282366920938463463374607431768211455
+    mask_ae2: 65535
+    tx_sync_word: 290
+Mux:
+  0: 5
+  1: 6
+  2: 7
+  3: 1
+  4: 29
+  5: 28
+  6: 20
+  7: 21
+  8: 13
+  9: 4
+  10: 0
+  11: 2
+  12: 31
+  13: 30
+  14: 22
+  15: 23
+  16: 12
+  17: 14
+  18: 11
+  19: 3
+  20: 24
+  21: 27
+  22: 17
+  23: 16
+  24: 15
+  25: 8
+  26: 9
+  27: 10
+  28: 25
+  29: 26
+  30: 19
+  31: 18
+  32: 34
+  33: 35
+  34: 43
+  35: 41
+  36: 32
+  37: 33
+  38: 42
+  39: 40
+  40: 39
+  41: 38
+  42: 44
+  43: 47
+  44: 36
+  45: 37
+  46: 45
+  47: 46

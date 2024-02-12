@@ -1,91 +1,162 @@
-i2c:
- emulator_addr: 1
-daq:
- elinks_out:
-  - { name : 'link0', polarity: 1, idcode: 0 }
-  - { name : 'link1', polarity: 1, idcode: 1 }
-  - { name : 'link2', polarity: 1, idcode: 2 }
-  - { name : 'link3', polarity: 1, idcode: 3 }
-  - { name : 'link4', polarity: 1, idcode: 4 }
-  - { name : 'link5', polarity: 1, idcode: 5 }
-  - { name : 'link6', polarity: 1, idcode: 6 }
-  - { name : 'link7', polarity: 1, idcode: 7 }
-  - { name : 'link8', polarity: 1, idcode: 8 }
-  - { name : 'link9', polarity: 1, idcode: 9 }
-  - { name : 'link10', polarity: 1, idcode: 10 }
-  - { name : 'link11', polarity: 1, idcode: 11 }
-  - { name : 'link12', polarity: 1, idcode: 12 }
- zmq_push_port: '8888'
- delay_scan_port: '8888'
- verbose: 1
-global:
- data_push_port: '8888'
- serverIP: localhost
- output_directory: data
-ECON-T:
- RW:
-  FMTBUF_ALL:
-   registers:
-    tx_sync_word:
-     value: 0b00100100010
-    buff_t1:
-     value: 338 # default for eRx = 13
-    buff_t2:
-     value: 314 # default for eRx = 13
-    buff_t3:
-     value: 25 # default for eRx = 13
-    config:
-     params:
-      eporttx_numen:
-       # Number of output ports enabled
-       param_value: 13
-      use_sum:
-       param_value: 0
-      stc_type:
-       param_value: 0
-
-  MFC_MUX_SELECT:
-   registers:
-    mux_select_*:
-     value: [ 3,  2,  1,  0,  7,  6,  5,  4,
-             11, 10,  9,  8, 15, 14, 13, 12,
-             19, 18, 17, 16, 23, 22, 21, 20,
-             27, 26, 25, 24, 31, 30, 29, 28,
-             35, 34, 33, 32, 39, 38, 37, 36,
-             43, 42, 41, 40, 47, 46, 45, 44]
-
-  MFC_CAL_VAL:
-   registers:
-    cal_*:
-     value: [2730, 2730, 2730, 2730, 2730, 2730, 2730, 2730,
-             2730, 2730, 2730, 2730, 2730, 2730, 2730, 2730,
-             2730, 2730, 2730, 2730, 2730, 2730, 2730, 2730,
-             2730, 2730, 2730, 2730, 2730, 2730, 2730, 2730,
-             2730, 2730, 2730, 2730, 2730, 2730, 2730, 2730,
-             2730, 2730, 2730, 2730, 2730, 2730, 2730, 2730]
-
-  MFC_ALGORITHM_SEL_DENSITY:
-   registers:
-    algo:
-     params:
-      select:
-       # 0: threshold sum, 1: Super Trigger Cell, 2: Best Choice (disabled), 3: repeater, 4: Autoencoder (Disabled)
-       param_value: 3
-      density:
-       # 1: high density
-       param_value: 1
-
-  ALGO_THRESHOLD_VAL:
-   registers:
-    threshold_val_*:
-     value: [47, 47, 47, 47, 47, 47, 47, 47,
-             47, 47, 47, 47, 47, 47, 47, 47,
-             47, 47, 47, 47, 47, 47, 47, 47,
-             47, 47, 47, 47, 47, 47, 47, 47,
-             47, 47, 47, 47, 47, 47, 47, 47,
-             47, 47, 47, 47, 47, 47, 47, 47]
-
-  ALGO_DROPLSB:
-   registers:
-    drop_lsb:
-     value: 3
+AlgoDroplsb:
+  Global: 3
+AlgoThreshold:
+  0: 47
+  1: 47
+  2: 47
+  3: 47
+  4: 47
+  5: 47
+  6: 47
+  7: 47
+  8: 47
+  9: 47
+  10: 47
+  11: 47
+  12: 47
+  13: 47
+  14: 47
+  15: 47
+  16: 47
+  17: 47
+  18: 47
+  19: 47
+  20: 47
+  21: 47
+  22: 47
+  23: 47
+  24: 47
+  25: 47
+  26: 47
+  27: 47
+  28: 47
+  29: 47
+  30: 47
+  31: 47
+  32: 47
+  33: 47
+  34: 47
+  35: 47
+  36: 47
+  37: 47
+  38: 47
+  39: 47
+  40: 47
+  41: 47
+  42: 47
+  43: 47
+  44: 47
+  45: 47
+  46: 47
+  47: 47
+Algorithm:
+  Global:
+    density: 1
+    select: 3
+Cal:
+  0: 2730
+  1: 2730
+  2: 2730
+  3: 2730
+  4: 2730
+  5: 2730
+  6: 2730
+  7: 2730
+  8: 2730
+  9: 2730
+  10: 2730
+  11: 2730
+  12: 2730
+  13: 2730
+  14: 2730
+  15: 2730
+  16: 2730
+  17: 2730
+  18: 2730
+  19: 2730
+  20: 2730
+  21: 2730
+  22: 2730
+  23: 2730
+  24: 2730
+  25: 2730
+  26: 2730
+  27: 2730
+  28: 2730
+  29: 2730
+  30: 2730
+  31: 2730
+  32: 2730
+  33: 2730
+  34: 2730
+  35: 2730
+  36: 2730
+  37: 2730
+  38: 2730
+  39: 2730
+  40: 2730
+  41: 2730
+  42: 2730
+  43: 2730
+  44: 2730
+  45: 2730
+  46: 2730
+  47: 2730
+FormatterBuffer:
+  Global:
+    active_etxs: 13
+    buff_t1: 338
+    buff_t2: 314
+    buff_t3: 25
+    stc_type: 0
+    tx_sync_word: 290
+    use_sum: 0
+Mux:
+  0: 3
+  1: 2
+  2: 1
+  3: 0
+  4: 7
+  5: 6
+  6: 5
+  7: 4
+  8: 11
+  9: 10
+  10: 9
+  11: 8
+  12: 15
+  13: 14
+  14: 13
+  15: 12
+  16: 19
+  17: 18
+  18: 17
+  19: 16
+  20: 23
+  21: 22
+  22: 21
+  23: 20
+  24: 27
+  25: 26
+  26: 25
+  27: 24
+  28: 31
+  29: 30
+  30: 29
+  31: 28
+  32: 35
+  33: 34
+  34: 33
+  35: 32
+  36: 39
+  37: 38
+  38: 37
+  39: 36
+  40: 43
+  41: 42
+  42: 41
+  43: 40
+  44: 47
+  45: 46
+  46: 45
+  47: 44
