@@ -4,7 +4,6 @@ FormatterBuffer:
     buff_t1: 338
     buff_t2: 214
     buff_t3: 25
-    active_etxs: 13
     stc_type: 0
     use_sum: 0
     
@@ -112,3 +111,6 @@ Algorithm:
   Global:
     density: 1
     select: 3
+
+AlgoDroplsb:
+  Global: 3
