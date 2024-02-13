@@ -180,7 +180,7 @@ FormatterBuffer:
     buff_t3: 25
     mask_ae: 340282366920938463463374607431768211455
     mask_ae2: 65535
-    tx_sync_word: 290
+    link_reset_pattern: 290
 Mux:
   0: 5
   1: 6
