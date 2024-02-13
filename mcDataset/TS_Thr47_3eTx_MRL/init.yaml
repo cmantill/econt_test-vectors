@@ -109,7 +109,7 @@ FormatterBuffer:
     buff_t2: 500
     buff_t3: 0
     stc_type: 0
-    tx_sync_word: 290
+    link_reset_pattern: 290
     use_sum: 0
 Mux:
   0: 3
