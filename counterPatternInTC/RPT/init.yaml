@@ -111,3 +111,6 @@ Algorithm:
   Global:
     density: 1
     select: 3
+
+AlgoDroplsb:
+  Global: 3
