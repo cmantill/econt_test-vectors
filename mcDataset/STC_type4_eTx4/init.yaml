@@ -1,6 +1,6 @@
 AlgoDroplsb:
   Global:
-    drop_lsb: 3
+   drop_lsb: 3
 AlgoThreshold:
   0: 47
   1: 47
@@ -53,7 +53,7 @@ AlgoThreshold:
 ConfigAlgo:
   Global:
     alg_high_density: 1
-    alg_type: 0
+    alg_type: 1
 Cal:
   0: 2048
   1: 2048
@@ -105,12 +105,11 @@ Cal:
   47: 2048
 FormatterBuffer:
   Global:
-    active_etxs: 0x1FFF
+    active_etxs: 0xf
     buff_t1: 338
     buff_t2: 314
     buff_t3: 25
-    stc_type: 0
-    idle_pattern: 290
+    stc_type: 4
     link_reset_pattern: 290
     use_sum: 0
 Mux:
